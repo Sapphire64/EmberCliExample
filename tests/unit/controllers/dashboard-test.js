@@ -70,3 +70,83 @@ test('recreateRows puts boxes into proper row containers', function (assert) {
     }
 
 });
+
+test('getRowByBoxIndex returns valid row', function (assert) {
+    var controller = this.subject();
+    var boxes = [];
+    var rows;
+
+    for (var i=1; i<=12; i++) {
+        boxes.push(Ember.Object.create({id: i}));
+    }
+
+    controller.set('boxes', boxes);
+
+    // We expect here that recreateRows was ran by watcher on Boxes
+    rows = controller.get('rows');
+
+    // Structure of rows
+    // 1 2 3
+    // 4 5
+    // 6
+    // 7 8 9
+    // 10 11
+    // 12
+
+    // Please note that ROW (not ROW ID) should be returned
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(1-1)), 0);
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(2-1)), 0);
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(3-1)), 0);
+
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(4-1)), 1);
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(5-1)), 1);
+
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(6-1)), 2);
+
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(7-1)), 3);
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(8-1)), 3);
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(9-1)), 3);
+
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(10-1)), 4);
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(11-1)), 4);
+
+    assert.equal(rows.indexOf(controller.getRowByBoxIndex(12-1)), 5);
+});
+
+test('getBoxNeighbours returns previous box if it\'s in the same row',
+ function (assert) {
+    var controller = this.subject();
+    var boxes = [];
+
+    for (var i=1; i<=12; i++) {
+        boxes.push({id: i});
+    }
+
+    controller.set('boxes', boxes);
+
+    // Structure of rows
+    // 1 2 3
+    // 4 5
+    // 6
+    // 7 8 9
+    // 10 11
+    // 12
+
+    assert.deepEqual(controller.getBoxNeighbours(boxes[1-1]), [undefined, boxes[2-1]]);
+    assert.deepEqual(controller.getBoxNeighbours(boxes[2-1]), [boxes[1-1], boxes[3-1]]);
+    assert.deepEqual(controller.getBoxNeighbours(boxes[3-1]), [boxes[2-1], undefined]);
+
+    assert.deepEqual(controller.getBoxNeighbours(boxes[4-1]), [undefined, boxes[5-1]]);
+    assert.deepEqual(controller.getBoxNeighbours(boxes[5-1]), [boxes[4-1], undefined]);
+
+    assert.deepEqual(controller.getBoxNeighbours(boxes[6-1]), [undefined, undefined]);
+
+    assert.deepEqual(controller.getBoxNeighbours(boxes[7-1]), [undefined, boxes[8-1]]);
+    assert.deepEqual(controller.getBoxNeighbours(boxes[8-1]), [boxes[7-1], boxes[9-1]]);
+    assert.deepEqual(controller.getBoxNeighbours(boxes[9-1]), [boxes[8-1], undefined]);
+
+    assert.deepEqual(controller.getBoxNeighbours(boxes[10-1]), [undefined, boxes[11-1]]);
+    assert.deepEqual(controller.getBoxNeighbours(boxes[11-1]), [boxes[10-1], undefined]);
+
+    assert.deepEqual(controller.getBoxNeighbours(boxes[12-1]), [undefined, undefined]);
+});
