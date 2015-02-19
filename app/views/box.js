@@ -17,11 +17,23 @@ export default Ember.View.extend({
         return [boxes[boxIndex-1] || null, boxes[boxIndex+1] || null];
     },
     previousElIndex: function () {
-        this.getBoxNeighbours();
-        return this.get('previousEl').get('id');
-    }.property(),
+        var prevNextElems = this.getBoxNeighbours();
+        var elem = prevNextElems[0];
+        if (!elem) {
+            return;
+        }
+        return elem.get('id');
+    }.property('getBoxNeighbours'),
     nextElIndex: function () {
-        this.getBoxNeighbours();
-        return this.get('nextEl').get('id');
-    }.property()
+        var prevNextElems = this.getBoxNeighbours();
+        var elem = prevNextElems[1];
+        if (!elem) {
+            return;
+        }
+
+        return elem.get('id');
+    }.property('getBoxNeighbours'),
+    boxId: function () {
+        return this.get('box').get('id');
+    }.property('box')
 });

@@ -4,10 +4,11 @@
 
 {{#each row in rows}}
     <div class="row">
-    {{#each item in row.boxes}}
-        {{view "box" item=item row=row}}
+    {{#each box in row.boxes}}
+        {{view "box" box=box row=row}}
     {{/each}}
     </div>
+    <br />
 {{/each}}
 
 

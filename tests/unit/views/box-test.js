@@ -113,13 +113,28 @@ test('getNeighbourElements assigns neighbours from row method', function (assert
 test('previousElIndex property returns correct value', function (assert) {
     var view = this.subject();
     view.set('getBoxNeighbours', function () {
-        this.set('previousEl', Ember.Object.create({id: 'testIdPrev'}));
-        this.set('nextEl', Ember.Object.create({id: 'testIdNext'}));
+        return [
+            Ember.Object.create({id: 'testIdPrev'}),
+            Ember.Object.create({id: 'testIdNext'})
+        ];
     });
 
     assert.equal(
         view.get('previousElIndex'), 'testIdPrev',
         "id of prev. element cached by getBoxNeighbours should be returned"
+    );
+});
+
+test('previousElIndex should properly handle null values', function (assert) {
+    var view = this.subject();
+    /* Null values */
+    view.set('getBoxNeighbours', function () {
+        return [null, null];
+    });
+
+    assert.equal(
+        view.get('previousElIndex'), null,
+        "Null value should be returned"
     );
 
 });
@@ -128,13 +143,35 @@ test('previousElIndex property returns correct value', function (assert) {
 test('nextElIndex property returns correct value', function (assert) {
     var view = this.subject();
     view.set('getBoxNeighbours', function () {
-        this.set('previousEl', Ember.Object.create({id: 'testIdPrev'}));
-        this.set('nextEl', Ember.Object.create({id: 'testIdNext'}));
+        return [
+            Ember.Object.create({id: 'testIdPrev'}),
+            Ember.Object.create({id: 'testIdNext'})
+        ];
     });
 
     assert.equal(
         view.get('nextElIndex'), 'testIdNext',
         "id of next element cached by getBoxNeighbours should be returned"
     );
+});
 
+test('nextElIndex should properly handle null values', function (assert) {
+    var view = this.subject();
+    /* Null values */
+    view.set('getBoxNeighbours', function () {
+        return [null, null];
+    });
+
+    assert.equal(
+        view.get('nextElIndex'), null,
+        "Null value should be returned"
+    );
+});
+
+test('boxId property should return current box id', function (assert) {
+    var view = this.subject();
+
+    view.set('box', Ember.Object.create({id: 'currentBoxId'}));
+
+    assert.equal(view.get('boxId'), 'currentBoxId');
 });
