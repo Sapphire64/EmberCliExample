@@ -3,10 +3,11 @@
 </div>
 
 {{#each row in rows}}
+    <div class="row">
     {{#each item in row.boxes}}
-        {{ item }}
+        {{view "box" item=item row=row}}
     {{/each}}
-    <br />
+    </div>
 {{/each}}
 
 

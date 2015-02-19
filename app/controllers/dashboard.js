@@ -34,7 +34,7 @@ export default Ember.Controller.extend({
                 rows.push(Ember.Object.create(
                     {
                         size: this.getRowSize(rows.length + 1),
-                        boxes: Ember.A([])
+                        boxes: Ember.A([]),
                     }
                 ));
             }
@@ -61,23 +61,6 @@ export default Ember.Controller.extend({
         }
 
         return this.get('rows')[rowShiftIndex + rowIndex];
-    },
-    getBoxNeighbours: function (box) {
-        var indexOfBox = this.get('boxes').indexOf(box);
-        var currentRow;
-        var boxes;
-        var indexOfBoxInRow;
-
-        if (indexOfBox === -1) {
-            throw new Error("Box is not inserted into controller scope");
-        }
-
-        currentRow = this.getRowByBoxIndex(indexOfBox);
-        boxes = currentRow.get('boxes');
-
-        indexOfBoxInRow = boxes.indexOf(box);
-
-        return [boxes[indexOfBoxInRow-1], boxes[indexOfBoxInRow+1]];
-    }
+    }    
 
 });
