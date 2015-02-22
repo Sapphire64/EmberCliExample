@@ -28,12 +28,35 @@
     .header {
         height: 50%;
         padding-top: 5%;
-        border-bottom:solid 1px black;            
+        border-bottom:solid 1px black;
     };
     .body {
         padding-top: 5%;
     }
 }
+
+.removeBtn {
+    cursor: pointer;
+}
+
+/* Box colors */
+.regular-box {
+
+}
+.red-box {
+    background-color: red;
+}
+.green-box {
+    background-color: green;
+}
+.blue-box {
+    color: white;
+    background-color: blue;
+    .header {
+        border-bottom:solid 1px white;
+    };
+}
+
 
 @media only screen and (max-width: 40em) {
     .box {

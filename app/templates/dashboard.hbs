@@ -3,7 +3,7 @@
         {{#each row in rows}}
             <div class="row">
             {{#each box in row.boxes}}
-                {{view "box" box=box row=row}}
+                {{view "box" box=box row=row boxes=boxes}}
             {{/each}}
             </div>
             <br class="hide-for-small-only" />

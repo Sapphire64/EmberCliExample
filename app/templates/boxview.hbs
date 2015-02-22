@@ -1,12 +1,12 @@
 <div class="medium-4 columns" {{action 'addNewBox' this.box}}>
-    <div class="box">
+    <div {{bind-attr class=":box view.colorClass"}}>
         <div class="header">
             <div class="row">
                 <div class="small-6 columns">
                     [{{ view.boxId }}]
                 </div>
                 <div class="small-6 columns">
-                    <span {{action 'removeBox' this.box}}>X</span>
+                    <span class="removeBtn" {{action 'removeBox' this.box}}>X</span>
                 </div>
             </div>
         </div>

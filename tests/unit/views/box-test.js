@@ -7,24 +7,88 @@ import Ember from 'ember';
 
 moduleFor('view:box');
 
+var getRowSize = function (i) {
+    if (i % 3 === 1) {
+        return 3;
+    }
+    else if (i % 3 === 2) {
+        return 2;
+    }
+    else if (i % 3 === 0) {
+        return 1;
+    }
+};
+
+test('colorClass should follow required logic', function (assert) {
+    /*
+        2 mod 4: red
+        3 mod 4: green
+        4 mod 4: blue
+    */
+    var view = this.subject();
+    var rows = [];
+    var boxes = [];
+    var targetRow;
+    var createRow = true;
+
+    for (var i=1; i<=12; i++) {
+        boxes.push({id: i});
+    }
+
+    // Creating rows and boxes (duplication of logic of Controller)
+    for (i=0; i<boxes.length; i++) {
+        var box = boxes[i];
+
+        if (createRow) {
+            rows.push(Ember.Object.create(
+                {
+                    size: getRowSize(rows.length + 1),
+                    boxes: Ember.A([]),
+                }
+            ));
+        }
+        targetRow = rows[rows.length-1];
+        targetRow.boxes.pushObject(box);
+
+        createRow = targetRow.get('boxes').length === targetRow.get('size');
+    }
+
+    view.set('row', rows[1]);
+    view.set('box', boxes[5-1]);
+    view.set('boxes', boxes);
+
+    assert.equal(
+        view.get('colorClass'), 'regular-box'
+    );
+
+    view.set('row', rows[2]);
+    view.set('box', boxes[6-1]);
+
+    assert.equal(
+        view.get('colorClass'), 'red-box'
+    );
+
+    view.set('row', rows[3]);
+    view.set('box', boxes[7-1]);
+
+    assert.equal(
+        view.get('colorClass'), 'green-box'
+    );
+
+    view.set('row', rows[3]);
+    view.set('box', boxes[8-1]);
+
+    assert.equal(
+        view.get('colorClass'), 'blue-box'
+    );
+});
+
 test('getNeighbourElements assigns neighbours from row method', function (assert) {
     var view = this.subject();
     var boxes = [];
     var rows = [];
     var createRow = true;
     var targetRow;
-
-    var getRowSize = function (i) {
-        if (i % 3 === 1) {
-            return 3;
-        }
-        else if (i % 3 === 2) {
-            return 2;
-        }
-        else if (i % 3 === 0) {
-            return 1;
-        }
-    };
 
     for (var i=1; i<=12; i++) {
         boxes.push({id: i});

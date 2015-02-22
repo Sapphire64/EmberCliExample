@@ -1,7 +1,30 @@
 import Ember from 'ember';
 
 export default Ember.View.extend({
-    templateName: 'boxview',    
+    templateName: 'boxview',
+    /* Box classes methods */
+    colorClass: function () {
+        var boxIndex = this.get('boxes').indexOf(this.get('box')) + 1;
+        var colorClass;
+        switch (boxIndex % 4) {
+            case 0:
+                colorClass = 'blue-box';
+                break;
+            case 2:
+                colorClass = 'red-box';
+                break;
+            case 3:
+                colorClass = 'green-box';
+                break;
+            default:
+                colorClass = 'regular-box';
+        }
+        return colorClass;
+    }.property('boxes', 'box'),
+    sizeClass: function () {
+
+    }.property('row'),
+    /* Helper methods */
     getBoxNeighbours: function () {
         var previousEl = this.get('previousEl');
         var nextEl = this.get('nextEl');
@@ -31,5 +54,5 @@ export default Ember.View.extend({
     }.property('getBoxNeighbours'),
     boxId: function () {
         return this.get('box').get('id');
-    }.property('box')
+    }.property('box'),
 });

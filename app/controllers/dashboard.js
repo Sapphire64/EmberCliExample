@@ -35,7 +35,6 @@ export default Ember.Controller.extend({
     /* Hardwiring box index for current dummy data,
        see routes to find why this number */
     boxIndex: 19,
-
     rows: [],
     getRowSize: function (i) {
         if (i % 3 === 1) {
@@ -88,6 +87,5 @@ export default Ember.Controller.extend({
         }
 
         return this.get('rows')[rowShiftIndex + rowIndex];
-    }
-
+    }    
 });
