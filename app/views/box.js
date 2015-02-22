@@ -1,11 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.View.extend({
-    templateName: 'boxview',
-    click: function(event) {
-        // Implement adding of Box logic
-        console.log("Clicked on item " + event);
-    },
+    templateName: 'boxview',    
     getBoxNeighbours: function () {
         var previousEl = this.get('previousEl');
         var nextEl = this.get('nextEl');

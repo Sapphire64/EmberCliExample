@@ -11,6 +11,9 @@ export default Ember.Route.extend({
         }
         return values;
     },
+    // model: function(params) {
+    //     return this.store.find('box');
+    // },
     setupController: function(controller, model) {
         this.controllerFor('dashboard').set('boxes', model);
     }

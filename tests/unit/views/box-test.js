@@ -139,7 +139,6 @@ test('previousElIndex should properly handle null values', function (assert) {
 
 });
 
-
 test('nextElIndex property returns correct value', function (assert) {
     var view = this.subject();
     view.set('getBoxNeighbours', function () {

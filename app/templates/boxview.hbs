@@ -1,9 +1,9 @@
-<div class="large-4 medium-4 columns">
+<div class="large-4 medium-4 columns" {{action 'addNewBox' this.box}}>
     <div class="row">
         <div class="large-6 medium-6 columns">
             {{ view.boxId }}
         </div>
-        <div class="large-6 medium-6 columns">
+        <div class="large-6 medium-6 columns" {{action 'removeBox' this.box}}>
             X
         </div>
     </div>

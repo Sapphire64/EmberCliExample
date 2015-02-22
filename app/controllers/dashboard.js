@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-    /* Expecte for next structure of rows:
+    /* Expected for next structure of rows:
          1 2 3
          4 5
          6
@@ -9,6 +9,33 @@ export default Ember.Controller.extend({
          10 11
          12
      */
+    actions: {
+        addNewBox: function (parentBox){
+            var boxes = this.get('boxes');
+            var indexOfBox = boxes.indexOf(parentBox);
+            var currentBoxCnt = this.get('boxIndex') + 1;
+            var newBox = Ember.Object.create({id: currentBoxCnt});
+
+            boxes.splice(indexOfBox + 1, 0, newBox);
+
+            this.set('boxes', boxes);
+            this.set('boxIndex', currentBoxCnt);
+            this.recreateRows();
+        },
+        removeBox: function (box) {
+            var boxes = this.get('boxes');
+            var indexOfBox = boxes.indexOf(box);
+
+            boxes.splice(indexOfBox, 1);
+
+            this.set('boxes', boxes);
+            this.recreateRows();
+        }
+    },
+    /* Hardwiring box index for current dummy data,
+       see routes to find why this number */
+    boxIndex: 19,
+
     rows: [],
     getRowSize: function (i) {
         if (i % 3 === 1) {
@@ -61,6 +88,6 @@ export default Ember.Controller.extend({
         }
 
         return this.get('rows')[rowShiftIndex + rowIndex];
-    }    
+    }
 
 });

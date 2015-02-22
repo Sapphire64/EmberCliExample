@@ -112,3 +112,75 @@ test('getRowByBoxIndex returns valid row', function (assert) {
 
     assert.equal(rows.indexOf(controller.getRowByBoxIndex(12-1)), 5);
 });
+
+test('removeBox should remove specified box from boxes container', function (assert){
+    var controller = this.subject();
+    var boxes = [];
+    var box;
+    var currentBoxesLen;
+
+    var recreateRowsCalled = false;
+    var recreateRowsMock = function () {
+        recreateRowsCalled = true;
+    };
+
+    for (var i=1; i<=12; i++) {
+        boxes.push(Ember.Object.create({id: i}));
+    }
+
+    controller.set('boxes', boxes);
+    controller.set('recreateRows', recreateRowsMock);
+
+    box = boxes[5];
+    currentBoxesLen = boxes.length;
+
+    controller.send('removeBox', box);
+    boxes = controller.get('boxes');
+
+    assert.equal(boxes.length, currentBoxesLen-1);
+    for (i=0; i<boxes.length; i++) {
+        assert.notEqual(boxes[i], box);
+    }
+
+    assert.ok(recreateRowsCalled, "recreateRows method should be called");
+});
+
+test('addNewBox adds a new box', function (assert) {
+    var controller = this.subject();
+    var boxes = [];
+    var boxIndex = 10000;
+    var oldBoxesLen;
+    var old5ElemId;
+
+    var recreateRowsCalled = false;
+    var recreateRowsMock = function () {
+        recreateRowsCalled = true;
+    };
+
+    for (var i=1; i<=12; i++) {
+        boxes.push(Ember.Object.create({id: i}));
+    }
+    oldBoxesLen = boxes.length;
+    old5ElemId = boxes[5].get('id');
+
+    controller.set('boxes', boxes);
+    controller.set('boxIndex', boxIndex);
+    controller.set('recreateRows', recreateRowsMock);
+
+    controller.send('addNewBox', boxes[5]);
+
+    assert.equal(controller.get('boxes').length, oldBoxesLen + 1);
+    assert.equal(controller.get('boxes')[6].get('id'), boxIndex + 1,
+        "New item should be added right after old item"
+    );
+    assert.equal(controller.get('boxes')[5].get('id'), old5ElemId,
+        "Older item should stay at the same position"
+    );
+
+    assert.equal(controller.get('boxIndex'), boxIndex + 1,
+        "Box Index should be incremented after operation"
+    );
+
+    assert.ok(recreateRowsCalled, "recreateRows method should be called");
+
+});
