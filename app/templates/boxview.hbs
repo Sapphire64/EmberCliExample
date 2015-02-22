@@ -1,18 +1,24 @@
-<div class="large-4 medium-4 columns" {{action 'addNewBox' this.box}}>
-    <div class="row">
-        <div class="large-6 medium-6 columns">
-            {{ view.boxId }}
+<div class="medium-4 columns" {{action 'addNewBox' this.box}}>
+    <div class="box">
+        <div class="header">
+            <div class="row">
+                <div class="small-6 columns">
+                    [{{ view.boxId }}]
+                </div>
+                <div class="small-6 columns">
+                    <span {{action 'removeBox' this.box}}>X</span>
+                </div>
+            </div>
         </div>
-        <div class="large-6 medium-6 columns" {{action 'removeBox' this.box}}>
-            X
-        </div>
-    </div>
-    <div class="row">
-        <div class="large-6 medium-6 columns">
-            {{ view.previousElIndex }}
-        </div>
-        <div class="large-6 medium-6 columns">
-            {{ view.nextElIndex }}
+        <div class="body">
+            <div class="row">
+                <div class="small-6 columns">
+                    {{ view.previousElIndex }}
+                </div>
+                <div class="small-6 columns">
+                    {{ view.nextElIndex }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

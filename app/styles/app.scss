@@ -1,0 +1,42 @@
+@import "settings";
+
+@import "foundation";
+
+.root-container {
+    background: url('/images/container1.png');
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+.inner-container {
+    max-width: 860px;
+    background-color: #eaeaea;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+.box {
+    background-color: #fefefe;
+    text-align: center;
+    height: 100px;
+    border-radius: 5px;
+
+    &:hover {
+        border: solid 5px black;
+    }
+    .header {
+        height: 50%;
+        padding-top: 5%;
+        border-bottom:solid 1px black;            
+    };
+    .body {
+        padding-top: 5%;
+    }
+}
+
+@media only screen and (max-width: 40em) {
+    .box {
+        margin-top: 5px;
+    }
+}
