@@ -22,7 +22,21 @@ export default Ember.View.extend({
         return colorClass;
     }.property('boxes', 'box'),
     sizeClass: function () {
+        var rowSize = this.get('row').get('size');
+        var outputClass;
 
+        switch (rowSize) {
+            case 3:
+                outputClass = 'medium-4';
+                break;
+            case 2:
+                outputClass = 'medium-6';
+                break;
+            case 1:
+                outputClass = 'medium-12';
+                break;
+        }
+        return outputClass;
     }.property('row'),
     /* Helper methods */
     getBoxNeighbours: function () {

@@ -83,6 +83,58 @@ test('colorClass should follow required logic', function (assert) {
     );
 });
 
+test('sizeClass should depend on row size', function (assert) {
+    var view = this.subject();
+    var rows = [];
+    var boxes = [];
+    var targetRow;
+    var createRow = true;
+
+    for (var i=1; i<=12; i++) {
+        boxes.push({id: i});
+    }
+
+    // Creating rows and boxes (duplication of logic of Controller)
+    for (i=0; i<boxes.length; i++) {
+        var box = boxes[i];
+
+        if (createRow) {
+            rows.push(Ember.Object.create(
+                {
+                    size: getRowSize(rows.length + 1),
+                    boxes: Ember.A([]),
+                }
+            ));
+        }
+        targetRow = rows[rows.length-1];
+        targetRow.boxes.pushObject(box);
+
+        createRow = targetRow.get('boxes').length === targetRow.get('size');
+    }
+
+    view.set('row', rows[0]);
+    view.set('box', boxes[1-1]);
+
+    assert.equal(
+        view.get('sizeClass'),
+        'medium-4'
+    );
+    view.set('row', rows[1]);
+    view.set('box', boxes[4-1]);
+
+    assert.equal(
+        view.get('sizeClass'),
+        'medium-6'
+    );
+    view.set('row', rows[2]);
+    view.set('box', boxes[6-1]);
+
+    assert.equal(
+        view.get('sizeClass'),
+        'medium-12'
+    );
+});
+
 test('getNeighbourElements assigns neighbours from row method', function (assert) {
     var view = this.subject();
     var boxes = [];

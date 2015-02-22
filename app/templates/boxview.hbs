@@ -1,4 +1,5 @@
-<div class="medium-4 columns" {{action 'addNewBox' this.box}}>
+<div {{bind-attr class=":columns view.sizeClass"}}
+     {{action 'addNewBox' this.box}}>
     <div {{bind-attr class=":box view.colorClass"}}>
         <div class="header">
             <div class="row">
