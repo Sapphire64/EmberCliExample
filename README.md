@@ -1,7 +1,14 @@
-# Grid
+# Ember-CLI Example Project
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+![App screenshot](http://i.imgur.com/Wh7krRw.png)
+
+My first experience with ember, qunit and foundation. 
+
+## TODO
+
+* Add integration tests
+* Add localStorage support
+* Implement more features listed in specs document
 
 ## Prerequisites
 
